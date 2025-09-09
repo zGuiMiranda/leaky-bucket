@@ -1,6 +1,4 @@
-import AbstractController from "./AbstractController";
-
-export class ExampleController extends AbstractController {
+export class ExampleController {
   async testMethod() {
     console.log("bateu");
   }

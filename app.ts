@@ -11,7 +11,6 @@ import {
   Counter,
   Registry as PromRegistry,
 } from "prom-client";
-import { ErrorHandler } from "src/inbound/errorHandler/ErrorHandler";
 
 class App {
   public server: FastifyInstance;
@@ -66,8 +65,6 @@ class App {
       });
       done();
     });
-
-    this.server.setErrorHandler(ErrorHandler);
 
     this.server.addHook("onRequest", async (request) => {
       if (["POST"].includes(request.method)) {

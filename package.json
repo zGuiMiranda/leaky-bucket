@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "prod": "cross-env NODE_ENV=prod nodemon",
-    "dev": "cross-env NODE_ENV=development nodemon -r tsconfig-paths/register src/main.ts",
+    "dev": "cross-env NODE_ENV=development nodemon --verbose -r tsconfig-paths/register src/main.ts",
     "test": "cross-env NODE_ENV=test jest --detectOpenHandles",
     "container-up": "docker-compose up -d --build --force-recreate",
     "container-down": "docker-compose down -v --remove-orphans"
