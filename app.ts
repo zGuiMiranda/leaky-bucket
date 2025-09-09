@@ -4,8 +4,7 @@ import "reflect-metadata";
 
 import swagger from "@fastify/swagger";
 import swaggerUi from "@fastify/swagger-ui";
-import { ExampleRoutes } from "./src/ExampleRoutes.route";
-import { Registry } from "./src/infra/di/DI";
+import { LeakyBucketRoutes } from "./src/LeakyBucketRoutes.route";
 
 import {
   collectDefaultMetrics,
@@ -13,8 +12,6 @@ import {
   Registry as PromRegistry,
 } from "prom-client";
 import { ErrorHandler } from "src/inbound/errorHandler/ErrorHandler";
-import { sequelize } from "src/outbound/config/database";
-import { ExampleRepository } from "src/outbound/repository/ExampleRepository";
 
 class App {
   public server: FastifyInstance;
@@ -25,25 +22,19 @@ class App {
     this.promRegistry = new PromRegistry();
     this.collectMetrics();
 
-    this.inject();
     this.server = Fastify({ logger: false });
     this.middleware();
     this.setSwagger();
     this.routes();
     this.prometheusRoute();
-    this.initializeDatabase();
-  }
-
-  initializeDatabase() {
-    sequelize.sync();
   }
 
   setSwagger() {
     this.server.register(swagger, {
       openapi: {
         info: {
-          title: "Documentação Benefícios",
-          description: "Documentação da API para Benefícios",
+          title: "Documentação Leaky Bucket",
+          description: "Documentação da API para Leaky Bucket",
           version: "1.0.0",
         },
       },
@@ -59,7 +50,7 @@ class App {
   }
 
   routes() {
-    this.server.register(ExampleRoutes, {
+    this.server.register(LeakyBucketRoutes, {
       prefix: "/examples",
     });
   }
@@ -83,13 +74,6 @@ class App {
         request.headers["content-type"] = "application/json";
       }
     });
-  }
-
-  inject() {
-    Registry.getInstance().provide(
-      "exampleRepository",
-      ExampleRepository.getInstance()
-    );
   }
 
   collectMetrics() {
