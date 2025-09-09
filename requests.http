@@ -1,0 +1,25 @@
+GET http://localhost:9000/examples?page=0&size=5&sort=name&direction=asc
+Content-Type: application/json
+
+{
+  "name": "Nome do Exemplo",
+  "description": "Descrição do Exemplo"
+
+}
+
+###
+
+
+POST http://localhost:9000/examples
+Content-Type: application/json
+
+{
+  "name": "Nome do Exemplo",
+  "description": "Descrição do Exemplo"
+
+}
+
+
+
+
+
